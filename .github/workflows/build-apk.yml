@@ -1,0 +1,54 @@
+name: Build Dragonic Engine APK
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest # <-- SUDAH DIPERBAIKI (Sebelumnya runs-runs-on)
+
+    steps:
+    - name: Checkout Source Code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: 20
+
+    - name: Install Dependencies
+      run: npm install
+
+    - name: Initialize Capacitor Android
+      run: |
+        npx cap add android
+        rm -f android/app/src/main/java/com/dragonic/engine/MainActivity.java
+
+    - name: Inject Custom Shizuku & Bridge Code
+      run: |
+        cp android-custom/MainActivity.java android/app/src/main/java/com/dragonic/engine/
+        cp android-custom/DragonicBridge.java android/app/src/main/java/com/dragonic/engine/
+        echo "dependencies { implementation 'dev.rikka.shizuku:api:13.1.5' }" >> android/app/build.gradle
+
+    - name: Sync Web Assets to Android
+      run: npx cap sync android
+
+    - name: Setup Java JDK 17
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'zulu'
+
+    - name: Build Debug APK via Gradle
+      run: |
+        cd android
+        chmod +x gradlew
+        ./gradlew assembleDebug
+
+    - name: Upload Final APK Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: Dragonic-Engine-v1.0
+        path: android/app/build/outputs/apk/debug/app-debug.apk
