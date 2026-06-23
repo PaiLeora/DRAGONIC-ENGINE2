@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest # <-- SUDAH DIPERBAIKI (Sebelumnya runs-runs-on)
+    runs-on: ubuntu-latest
 
     steps:
     - name: Checkout Source Code
@@ -23,13 +23,25 @@ jobs:
 
     - name: Initialize Capacitor Android
       run: |
+        # Memastikan folder www ada agar Capacitor tidak error
+        mkdir -p www
         npx cap add android
+        # Hapus file bawaan agar tidak bentrok
         rm -f android/app/src/main/java/com/dragonic/engine/MainActivity.java
 
     - name: Inject Custom Shizuku & Bridge Code
       run: |
+        # Membuat folder tujuan secara paksa jika belum terbuat otomatis
+        mkdir -p android/app/src/main/java/com/dragonic/engine/
+        
+        # Copas file custom dari repositori ke sistem Android
         cp android-custom/MainActivity.java android/app/src/main/java/com/dragonic/engine/
         cp android-custom/DragonicBridge.java android/app/src/main/java/com/dragonic/engine/
+        
+        # FIX: Mendongkrak minSdkVersion dari 22 ke 24 agar Shizuku bisa masuk tanpa error
+        sed -i 's/minSdkVersion = 22/minSdkVersion = 24/g' android/variables.gradle
+        
+        # Suntik library Shizuku ke sistem Gradle
         echo "dependencies { implementation 'dev.rikka.shizuku:api:13.1.5' }" >> android/app/build.gradle
 
     - name: Sync Web Assets to Android
