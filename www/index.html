@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DRAGONIC ENGINE</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="loading-screen">
+        <div class="loader-content">
+            <h1 class="glow-text">DRAGONIC ENGINE</h1>
+            <p class="blink-text">INITIALIZING CYBER NETWORKS...</p>
+        </div>
+    </div>
+
+    <div id="app-container" class="hidden">
+        <header>
+            <div class="logo">DRAGONIC <span class="accent">v1.0</span></div>
+            <div id="shizuku-badge" class="badge offline">ENGINE OFFLINE</div>
+        </header>
+
+        <main id="content-area">
+            </main>
+
+        <nav class="bottom-nav">
+            <button onclick="switchTab('home')" id="nav-home" class="nav-item active">HOME</button>
+            <button onclick="switchTab('build')" id="nav-build" class="nav-item">BUILD</button>
+            <button onclick="switchTab('performance')" id="nav-performance" class="nav-item">PERF</button>
+            <button onclick="switchTab('network')" id="nav-network" class="nav-item">NET</button>
+            <button onclick="switchTab('system')" id="nav-system" class="nav-item">SYS</button>
+            <button onclick="switchTab('ai')" id="nav-ai" class="nav-item">AI</button>
+        </nav>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
