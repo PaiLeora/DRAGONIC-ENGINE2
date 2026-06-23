@@ -1,0 +1,21 @@
+{
+  "short_name": "Dragonic",
+  "name": "DRAGONIC ENGINE OPTIMIZER",
+  "icons": [
+    {
+      "src": "https://placehold.co/192x192/050505/ff003c?text=DRAGONIC",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "https://placehold.co/512x512/050505/ff003c?text=DRAGONIC",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "index.html",
+  "background_color": "#050505",
+  "theme_color": "#ff003c",
+  "display": "standalone",
+  "orientation": "portrait"
+}
